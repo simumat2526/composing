@@ -102,32 +102,32 @@
 
         .drop-zone {
             position: absolute;
-            width: 70px;
-            height: 70px;
-            border: 3px dashed rgba(255,215,0,0.7);
+            width: 50px;
+            height: 50px;
+            border: 2px solid rgba(255,255,255,0.8);
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
-            background: rgba(255,255,255,0.1);
-            font-size: 32px;
+            background: rgba(0,184,148,0.2);
+            font-size: 24px;
             font-weight: 900;
             color: white;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             pointer-events: all;
             cursor: grab;
             transition: all 0.2s ease;
         }
 
         .drop-zone.over {
-            background: rgba(0,184,148,0.3);
-            border-color: rgba(0,184,148,0.9);
-            transform: scale(1.1);
-            box-shadow: 0 0 15px rgba(0,184,148,0.6);
+            background: rgba(0,184,148,0.6);
+            border-color: rgba(0,184,148,1);
+            transform: scale(1.15);
+            box-shadow: 0 0 12px rgba(0,184,148,0.8);
         }
 
         .drop-zone.filled {
-            background: rgba(0,184,148,0.5);
+            background: rgba(0,184,148,0.8);
             border-color: rgba(0,184,148,1);
         }
 
@@ -310,7 +310,19 @@
 let puzzles = [
     [2, 5, 8, 3, 7],
     [12, 4, 15, 9, 1],
-    [6, 18, 2, 13, 11]
+    [6, 18, 2, 13, 11],
+    [10, 3, 8, 1, 14],
+    [5, 11, 2, 16, 9],
+    [20, 5, 15, 3, 18],
+    [7, 1, 9, 4, 12],
+    [14, 6, 11, 2, 19],
+    [3, 13, 8, 17, 5],
+    [16, 4, 10, 7, 2],
+    [9, 15, 3, 12, 6],
+    [11, 8, 1, 14, 4],
+    [17, 5, 13, 2, 10],
+    [6, 16, 9, 3, 12],
+    [20, 1, 14, 7, 11]
 ];
 
 let mode = ["ASCENDING", "DESCENDING"];
@@ -340,13 +352,13 @@ function createDropZones() {
     let zonesContainer = document.getElementById("dropZones");
     zonesContainer.innerHTML = "";
     
-    // Create 5 circular drop zones arranged around the candy
+    // Create 5 circular drop zones in U-shape (matching candy marks)
     let positions = [
-        { top: "10%", left: "50%", transform: "translateX(-50%)" },     // top
-        { top: "30%", right: "5%", transform: "translateX(0)" },         // top-right
-        { top: "70%", right: "5%", transform: "translateX(0)" },         // bottom-right
-        { top: "70%", left: "5%", transform: "translateX(0)" },          // bottom-left
-        { top: "30%", left: "5%", transform: "translateX(0)" }           // top-left
+        { bottom: "5%", left: "50%", transform: "translateX(-50%)" },     // bottom center
+        { bottom: "25%", right: "8%", transform: "translateX(0)" },        // bottom-right
+        { bottom: "25%", left: "8%", transform: "translateX(0)" },         // bottom-left
+        { top: "25%", right: "8%", transform: "translateX(0)" },           // top-right
+        { top: "25%", left: "8%", transform: "translateX(0)" }             // top-left
     ];
     
     currentPuzzle.forEach((n, idx) => {
@@ -354,7 +366,8 @@ function createDropZones() {
         zone.className = "drop-zone";
         zone.id = "zone" + n;
         zone.textContent = "";
-        zone.style.top = positions[idx].top;
+        zone.style.bottom = positions[idx].bottom || "auto";
+        zone.style.top = positions[idx].top || "auto";
         zone.style.left = positions[idx].left;
         zone.style.right = positions[idx].right || "auto";
         zone.style.transform = positions[idx].transform || "translateX(0)";
