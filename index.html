@@ -55,6 +55,7 @@
         }
 
         .candy-image-container {
+            position: relative;
             text-align: center;
             padding: 30px 20px;
             background: rgba(255,255,255,0.1);
@@ -75,6 +76,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
             cursor: grab;
             transition: all 0.2s ease;
+            display: block;
         }
 
         .candy-image-container img:hover {
@@ -85,6 +87,48 @@
         .candy-image-container img.over {
             transform: scale(1.1);
             box-shadow: 0 20px 50px rgba(255,100,0,0.6);
+        }
+
+        .drop-zones {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
+            max-width: 450px;
+            aspect-ratio: auto;
+            pointer-events: none;
+        }
+
+        .drop-zone {
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            border: 3px dashed rgba(255,215,0,0.7);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: rgba(255,255,255,0.1);
+            font-size: 32px;
+            font-weight: 900;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            pointer-events: all;
+            cursor: grab;
+            transition: all 0.2s ease;
+        }
+
+        .drop-zone.over {
+            background: rgba(0,184,148,0.3);
+            border-color: rgba(0,184,148,0.9);
+            transform: scale(1.1);
+            box-shadow: 0 0 15px rgba(0,184,148,0.6);
+        }
+
+        .drop-zone.filled {
+            background: rgba(0,184,148,0.5);
+            border-color: rgba(0,184,148,1);
         }
 
         .game-container {
@@ -253,7 +297,8 @@
     <div class="numbers" id="numbers"></div>
 
     <div class="candy-image-container">
-        <img src="images/candy.png" alt="Candy Model" id="candyImage" ondragover="dragOverCandy(event)" ondrop="dropOnCandy(event)" ondragleave="dragLeaveCandy(event)">
+        <img src="images/candy.png" alt="Candy Model" id="candyImage">
+        <div class="drop-zones" id="dropZones"></div>
     </div>
 
     <button class="btn" onclick="checkAnswer()">✨ CHECK ✨</button>
@@ -271,6 +316,7 @@ let puzzles = [
 let mode = ["ASCENDING", "DESCENDING"];
 
 let currentPuzzle, correctOrder, droppedNumbers = [];
+let zonePositions = [];
 
 function loadPuzzle() {
     document.getElementById("result").style.opacity = 0;
@@ -287,6 +333,68 @@ function loadPuzzle() {
     correctOrder.sort((a, b) => gameMode === "ASCENDING" ? a - b : b - a);
 
     loadTiles();
+    createDropZones();
+}
+
+function createDropZones() {
+    let zonesContainer = document.getElementById("dropZones");
+    zonesContainer.innerHTML = "";
+    
+    // Create 5 circular drop zones arranged around the candy
+    let positions = [
+        { top: "10%", left: "50%", transform: "translateX(-50%)" },     // top
+        { top: "30%", right: "5%", transform: "translateX(0)" },         // top-right
+        { top: "70%", right: "5%", transform: "translateX(0)" },         // bottom-right
+        { top: "70%", left: "5%", transform: "translateX(0)" },          // bottom-left
+        { top: "30%", left: "5%", transform: "translateX(0)" }           // top-left
+    ];
+    
+    currentPuzzle.forEach((n, idx) => {
+        let zone = document.createElement("div");
+        zone.className = "drop-zone";
+        zone.id = "zone" + n;
+        zone.textContent = "";
+        zone.style.top = positions[idx].top;
+        zone.style.left = positions[idx].left;
+        zone.style.right = positions[idx].right || "auto";
+        zone.style.transform = positions[idx].transform || "translateX(0)";
+        
+        zone.addEventListener("dragover", dragOverZone);
+        zone.addEventListener("drop", dropOnZone);
+        zone.addEventListener("dragleave", dragLeaveZone);
+        
+        zonesContainer.appendChild(zone);
+    });
+}
+
+function dragOverZone(e) {
+    e.preventDefault();
+    e.dataTransfer.dropEffect = "move";
+    e.target.classList.add("over");
+}
+
+function dragLeaveZone(e) {
+    e.target.classList.remove("over");
+}
+
+function dropOnZone(e) {
+    e.preventDefault();
+    e.target.classList.remove("over");
+    
+    let id = e.dataTransfer.getData("text");
+    let tile = document.getElementById(id);
+    
+    if (tile) {
+        let num = parseInt(tile.textContent);
+        droppedNumbers.push(num);
+        
+        // Show number in the zone
+        e.target.textContent = num;
+        e.target.classList.add("filled");
+        
+        // Show game message
+        showMessage(`🎯 Great! You dropped ${num}! 🎯`);
+    }
 }
 
 function loadTiles() {
@@ -307,32 +415,6 @@ function loadTiles() {
 function dragStart(e) {
     e.dataTransfer.effectAllowed = "move";
     e.dataTransfer.setData("text", e.target.id);
-}
-
-function dragOverCandy(e) {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-    document.getElementById("candyImage").classList.add("over");
-}
-
-function dragLeaveCandy(e) {
-    document.getElementById("candyImage").classList.remove("over");
-}
-
-function dropOnCandy(e) {
-    e.preventDefault();
-    document.getElementById("candyImage").classList.remove("over");
-
-    let id = e.dataTransfer.getData("text");
-    let tile = document.getElementById(id);
-
-    if (tile) {
-        let num = parseInt(tile.textContent);
-        droppedNumbers.push(num);
-        
-        // Show game message
-        showMessage(`🎯 Great! You dropped ${num}! 🎯`);
-    }
 }
 
 function showMessage(msg) {
