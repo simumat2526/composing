@@ -31,11 +31,12 @@
 
         .header h1 {
             margin: 0;
-            font-size: 52px;
+            font-size: 48px;
             font-weight: 800;
             color: white;
-            letter-spacing: 3px;
+            letter-spacing: 2px;
             text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+            display: inline-block;
         }
 
         .header img {
@@ -194,6 +195,29 @@
             border: 3px solid rgba(214,48,49,0.5);
         }
 
+        .game-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0,0,0,0.9);
+            color: #ffd93d;
+            padding: 30px 40px;
+            border-radius: 15px;
+            font-size: 28px;
+            font-weight: 800;
+            text-align: center;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            box-shadow: 0 0 30px rgba(255,217,61,0.5);
+        }
+
+        .game-message.show {
+            opacity: 1;
+        }
+
         @media (max-width: 768px) {
             .header h1 {
                 font-size: 36px;
@@ -214,21 +238,23 @@
 
 <body>
 
+<div class="game-message" id="gameMessage"></div>
+
 <div class="header">
-    <h1>🎮 SMART MATH LAB 🎮</h1>
+    <h1>SMART MATH LAB</h1>
     <img src="images/logo.png" alt="Smart Math Lab Logo">
 </div>
 
-<div class="subtitle">🍭 Drag Numbers to the Candy! 🍭</div>
-
-<div class="candy-image-container">
-    <img src="images/candy.png" alt="Candy Model" id="candyImage" ondragover="dragOverCandy(event)" ondrop="dropOnCandy(event)" ondragleave="dragLeaveCandy(event)">
-</div>
+<div class="subtitle">🎮 Welcome to the Candy Math Challenge! 🎮</div>
 
 <div class="game-container">
     <div class="instruction" id="title"></div>
 
     <div class="numbers" id="numbers"></div>
+
+    <div class="candy-image-container">
+        <img src="images/candy.png" alt="Candy Model" id="candyImage" ondragover="dragOverCandy(event)" ondrop="dropOnCandy(event)" ondragleave="dragLeaveCandy(event)">
+    </div>
 
     <button class="btn" onclick="checkAnswer()">✨ CHECK ✨</button>
 
@@ -301,13 +327,26 @@ function dropOnCandy(e) {
     let tile = document.getElementById(id);
 
     if (tile) {
-        droppedNumbers.push(parseInt(tile.textContent));
+        let num = parseInt(tile.textContent);
+        droppedNumbers.push(num);
+        
+        // Show game message
+        showMessage(`🎯 Great! You dropped ${num}! 🎯`);
     }
+}
+
+function showMessage(msg) {
+    let msgBox = document.getElementById("gameMessage");
+    msgBox.textContent = msg;
+    msgBox.classList.add("show");
+    setTimeout(() => {
+        msgBox.classList.remove("show");
+    }, 1500);
 }
 
 function checkAnswer() {
     if (droppedNumbers.length === 0) {
-        alert("Drag numbers to the candy! 📍");
+        showMessage("Drag numbers to the candy! 📍");
         return;
     }
 
@@ -315,14 +354,16 @@ function checkAnswer() {
 
     if (JSON.stringify(droppedNumbers) === JSON.stringify(correctOrder)) {
         result.classList.add('success');
-        result.innerHTML = "✅ CORRECT! AMAZING! 🎉🎉";
+        result.innerHTML = "✅ CORRECT! YOU'RE A MATH CHAMPION! 🏆🎉🎉";
+        showMessage("🎊 AMAZING! YOU WON! 🎊");
     } else {
         result.classList.add('error');
         result.innerHTML = "❌ NOT QUITE! TRY AGAIN! 💪";
+        showMessage("Try again! You can do it! 💪");
     }
 
     result.style.opacity = 1;
-    setTimeout(loadPuzzle, 2500);
+    setTimeout(loadPuzzle, 3000);
 }
 
 loadPuzzle();
