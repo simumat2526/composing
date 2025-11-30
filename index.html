@@ -10,48 +10,26 @@
         font-family: Poppins, sans-serif;
         background: linear-gradient(135deg, #dff7ff, #fff8d6);
         overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
     }
 
-    .wrapper {
-        display: flex;
-        gap: 20px;
-        padding: 20px;
-        max-width: 1400px;
-        margin: 0 auto;
-        width: 100%;
+    .candy-image-container {
+        text-align: center;
+        padding: 15px;
+        margin-top: 15px;
     }
 
-    .main-content {
-        flex: 1;
-        min-width: 0;
-    }
-
-    .candy-image-side {
-        flex-shrink: 0;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        max-width: 300px;
-    }
-
-    .candy-image-side img {
-        width: 100%;
+    .candy-image-container img {
+        width: 180px;
         height: auto;
-        border-radius: 20px;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        object-fit: contain;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        cursor: grab;
+        transition: 0.2s;
     }
 
-    @media (max-width: 1024px) {
-        .wrapper {
-            flex-direction: column;
-        }
-        .candy-image-side {
-            max-width: 100%;
-            max-height: 300px;
-        }
+    .candy-image-container img.over {
+        transform: scale(1.05);
+        box-shadow: 0 6px 18px rgba(0,0,0,0.25);
     }
 
     /* Blur overlay for soft effect */
@@ -229,8 +207,9 @@
 
 <div class="subtitle">🎮 Play With Small to Big Candy! 🎉</div>
 
-<div class="wrapper">
-    <div class="main-content">
+<div class="candy-image-container">
+    <img src="images/candy.png" alt="Candy Model" id="candyImage" ondragover="dragOverCandy(event)" ondrop="dropOnCandy(event)" ondragleave="dragLeaveCandy(event)">
+</div>
 
 <div class="game-container">
     <div class="instruction" id="title"></div>
@@ -274,13 +253,6 @@
     <button class="btn" onclick="checkAnswer()">CHECK</button>
 
     <div id="result"></div>
-</div>
-
-    </div>
-
-    <div class="candy-image-side">
-        <img src="images/candy.png" alt="Candy Model">
-    </div>
 </div>
 
 <script>
@@ -381,6 +353,28 @@ function checkAnswer() {
     result.style.opacity = 1;
 
     setTimeout(loadPuzzle, 2000);
+}
+
+function dragOverCandy(e) {
+    e.preventDefault();
+    document.getElementById("candyImage").classList.add("over");
+}
+
+function dragLeaveCandy(e) {
+    document.getElementById("candyImage").classList.remove("over");
+}
+
+function dropOnCandy(e) {
+    e.preventDefault();
+    document.getElementById("candyImage").classList.remove("over");
+    
+    let id = e.dataTransfer.getData("text");
+    let tile = document.getElementById(id);
+    
+    if (tile) {
+        // Optional: Show a message or animation when dropped on candy
+        alert("Number " + tile.textContent + " dropped on candy! 🍭");
+    }
 }
 
 loadPuzzle();
