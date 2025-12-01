@@ -2,321 +2,289 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>SMART MATH LAB – Candy Order Puzzle</title>
-
+<title>SMART MATH LAB – Candy Puzzle</title>
 <style>
-    body {
-        margin: 0;
-        font-family: Poppins, sans-serif;
-        background: linear-gradient(135deg, #be5c7d, #e079b5);
-        overflow-x: hidden;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        padding: 20px;
-        height: 100vh;
-    }
+body {
+    margin: 0;
+    font-family: Poppins, sans-serif;
+    background: linear-gradient(135deg, #14b8a6, #4ade80, #0ea5e9);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    min-height: 100vh;
+}
 
-    /* LEFT IMAGE PANEL */
-    .image-panel {
-        width: 40%;
-        height: 100%;
-        background-image: url("images/candy.png"); /* your model image */
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center;
-        border-radius: 15px;
-    }
+/* MAIN CONTENT */
+.main-content {
+    width: 60%;
+    text-align: center;
+}
 
-    .main-content {
-        width: 55%;
-        text-align: center;
-    }
+/* HEADER */
+.header {
+    text-align: center;
+    padding: 15px;
+    background: #0f766e;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    border-radius: 15px;
+    margin-bottom: 20px;
+}
 
-    .header {
-        text-align: center;
-        padding: 15px;
-        background: rgb(202, 105, 105);
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        border-radius: 15px;
-        margin-bottom: 20px;
-    }
+.header img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
 
-    .header h1 {
-        margin: 0;
-        font-size: 60px;
-        font-weight: 700;
-        color: #e21818;
-    }
+.header h1 {
+    margin: 0;
+    font-size: 50px;
+    font-weight: 700;
+    color: #fff;
+}
 
-    .header img {
-        height: 55px;
-        margin-top: 10px;
-    }
+.sub-title {
+    margin-top: 10px;
+    font-size: 24px;
+    color: #fff;
+    font-weight: 600;
+    text-shadow: 1px 1px 2px #000;
+}
 
-    .sub-title {
-        margin-top: 10px;
-        font-size: 24px;
-        color: #4a148c;
-        font-weight: 600;
-        text-shadow: 1px 1px 2px #fff;
-    }
+.instruction {
+    font-size: 26px;
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 15px;
+    text-shadow: 1px 1px 2px #000;
+}
 
-    .instruction {
-        font-size: 26px;
-        font-weight: bold;
-        color: #0c457d;
-        margin-bottom: 15px;
-    }
+/* CANDY STAND */
+.candy-stand {
+    margin: auto;
+    background: rgba(255,255,255,0.1);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+    backdrop-filter: blur(3px);
+}
 
-    .candy-stand {
-        margin: auto;
-        background: rgba(255,255,255,0.9);
-        padding: 25px;
-        border-radius: 20px;
-        box-shadow: 0 6px 25px rgba(0,0,0,0.25);
-        backdrop-filter: blur(3px);
-    }
+/* CANDY SLOTS */
+.slots {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 25px;
+}
 
-    .candies {
-        display: flex;
-        justify-content: center;
-        gap: 40px;
-        margin-top: 30px;
-        align-items: flex-end;
-    }
+.slot {
+    width: 100px;
+    height: 100px;
+    border: 3px dashed #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    color: #fff;
+    font-weight: bold;
+    transition: background 0.3s;
+}
 
-    /* Candy sticks and upright candies */
-    .c1 { background:#ffca28; height:150px; }
-    .c2 { background:#00bcd4; height:200px; }
-    .c3 { background:#8bc34a; height:230px; }
-    .c4 { background:#4caf50; height:260px; }
-    .c5 { background:#f44336; height:300px; }
+.slot.over {
+    background: #ffffff88;
+}
 
-    .candy {
-        display: flex;
-        flex-direction: column; /* upright candy: stick on bottom */
-        align-items: center;
-        animation: pop 0.7s ease;
-    }
+/* CANDIES */
+.candies {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    align-items: flex-end;
+    margin-top: 20px;
+}
 
-    @keyframes pop {
-        0% { transform: scale(0.5); }
-        50% { transform: scale(1.2); }
-        100% { transform: scale(1); }
-    }
+.candy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    animation: pop 0.5s ease;
+}
 
-    .stick {
-        width: 28px;
-        border-radius: 20px;
-        margin-top: 10px;
-        border: 5px solid #795548;
-    }
+@keyframes pop {
+    0% { transform: scale(0.5);}
+    50% { transform: scale(1.2);}
+    100% { transform: scale(1);}
+}
 
-    .circle {
-        width: 100px;
-        height: 100px;
-        border-radius: 50%;
-        background: white;
-        border: 5px solid #555;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 32px;
-        font-weight: bold;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        cursor: grab;
-    }
+.stick {
+    width: 28px;
+    border-radius: 20px;
+    margin-top: 10px;
+    border: 5px solid #795548;
+}
 
-    .circle.over {
-        background: #d4ffd7;
-        transform: scale(1.1);
-        transition: 0.2s;
-    }
+.c1 { background:#ffca28; height:150px; }
+.c2 { background:#00bcd4; height:200px; }
+.c3 { background:#8bc34a; height:230px; }
+.c4 { background:#4caf50; height:260px; }
+.c5 { background:#f44336; height:300px; }
 
-    .numbers {
-        margin-top: 40px;
-        display: flex;
-        justify-content: center;
-        gap: 20px;
-        flex-wrap: wrap;
-    }
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: white;
+    border: 5px solid #555;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: bold;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    cursor: grab;
+    transition: transform 0.2s;
+}
 
-    .tile {
-        width: 85px;
-        height: 85px;
-        background: #ffffffcc;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        border-radius: 18px;
-        font-size: 32px;
-        font-weight: bold;
-        cursor: grab;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        backdrop-filter: blur(3px);
-        transition: transform 0.2s;
-    }
+.circle.over {
+    background: #d4ffd7;
+    transform: scale(1.1);
+}
 
-    .tile:hover {
-        transform: scale(1.2);
-    }
+.disabled-candy {
+    opacity: 0.4;
+    pointer-events: none;
+    transform: scale(1);
+}
 
-    .btn {
-        margin-top: 25px;
-        padding: 12px 25px;
-        font-size: 20px;
-        background: #ff3d3d;
-        color: white;
-        border: none;
-        border-radius: 15px;
-        cursor: pointer;
-        font-weight: bold;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
+/* BUTTON */
+.btn {
+    margin-top: 25px;
+    padding: 12px 25px;
+    font-size: 20px;
+    background: #f59e0b;
+    color: white;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
 
-    #result {
-        margin-top: 15px;
-        font-size: 26px;
-        font-weight: bold;
-        opacity: 0;
-        transition: 0.8s;
-    }
-
+#result {
+    margin-top: 15px;
+    font-size: 26px;
+    font-weight: bold;
+    opacity: 0;
+    transition: 0.8s;
+    color: #fff;
+    text-shadow: 1px 1px #000;
+}
 </style>
 </head>
-
 <body>
 
-    <div class="image-panel"></div>
+<div class="main-content">
+    <div class="header">
+        <img src="images/logo.png" alt="Smart Math Lab Logo">
+        <h1>SMART MATH LAB</h1>
+    </div>
 
-    <div class="main-content">
-        <div class="header">
-            <h1>SMART MATH LAB</h1>
-            <img src="images/logo.png" alt="Your Logo">
+    <div class="sub-title">🍬 Solve The Candy Puzzle! 🍭</div>
+    <div class="instruction" id="title"></div>
+
+    <div class="candy-stand">
+        <div class="slots">
+            <div class="slot" id="slot1"></div>
+            <div class="slot" id="slot2"></div>
+            <div class="slot" id="slot3"></div>
+            <div class="slot" id="slot4"></div>
+            <div class="slot" id="slot5"></div>
         </div>
 
-        <div class="sub-title">🍬 Play With Small to Big Candies! 🍭</div>
-        <div class="instruction" id="title"></div>
-
-        <div class="candy-stand">
-            <div class="candies">
-                <div class="candy">
-                    <div class="circle" id="slot1"></div>
-                    <div class="stick c1"></div>
-                </div>
-                <div class="candy">
-                    <div class="circle" id="slot2"></div>
-                    <div class="stick c2"></div>
-                </div>
-                <div class="candy">
-                    <div class="circle" id="slot3"></div>
-                    <div class="stick c3"></div>
-                </div>
-                <div class="candy">
-                    <div class="circle" id="slot4"></div>
-                    <div class="stick c4"></div>
-                </div>
-                <div class="candy">
-                    <div class="circle" id="slot5"></div>
-                    <div class="stick c5"></div>
-                </div>
+        <div class="candies" id="candies">
+            <div class="candy">
+                <div class="circle" id="c1" draggable="true">2</div>
+                <div class="stick c1"></div>
+            </div>
+            <div class="candy">
+                <div class="circle" id="c2" draggable="true">5</div>
+                <div class="stick c2"></div>
+            </div>
+            <div class="candy">
+                <div class="circle" id="c3" draggable="true">8</div>
+                <div class="stick c3"></div>
+            </div>
+            <div class="candy">
+                <div class="circle" id="c4" draggable="true">3</div>
+                <div class="stick c4"></div>
+            </div>
+            <div class="candy">
+                <div class="circle" id="c5" draggable="true">7</div>
+                <div class="stick c5"></div>
             </div>
         </div>
 
-        <div class="numbers" id="numbers"></div>
         <button class="btn" onclick="checkAnswer()">CHECK</button>
         <div id="result"></div>
     </div>
+</div>
 
 <script>
-let puzzles = [
-    [2, 5, 8, 3, 7],
-    [12, 4, 15, 9, 1],
-    [6, 18, 2, 13, 11]
-];
+const puzzle = {
+    numbers: [2,5,8,3,7],
+    answer: [8,3,7,2,5],
+    question: "Place the candies so largest is on left and smallest on right."
+};
 
-let mode = ["ASCENDING", "DESCENDING"];
-let currentPuzzle, correctOrder;
+document.getElementById("title").innerText = puzzle.question;
 
-function loadPuzzle() {
-    document.getElementById("result").style.opacity = 0;
-    currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
-    let gameMode = mode[Math.floor(Math.random() * mode.length)];
-    document.getElementById("title").innerHTML =
-        `Arrange in <span style="color:red;">${gameMode}</span> order`;
-    correctOrder = [...currentPuzzle];
-    correctOrder.sort((a,b)=> gameMode==="ASCENDING"? a-b : b-a);
-    loadTiles();
-    clearSlots();
-}
+const circles = document.querySelectorAll('.circle');
+const slots = document.querySelectorAll('.slot');
 
-function loadTiles() {
-    let area = document.getElementById("numbers");
-    area.innerHTML = "";
-    currentPuzzle.forEach(n => {
-        let div = document.createElement("div");
-        div.className = "tile";
-        div.draggable = true;
-        div.id = "t"+n;
-        div.textContent = n;
-        div.addEventListener("dragstart", dragStart);
-        area.appendChild(div);
+circles.forEach(candy => {
+    candy.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text', candy.id);
     });
-}
+});
 
-function clearSlots() {
-    for(let i=1;i<=5;i++){
-        let s=document.getElementById("slot"+i);
-        s.textContent="";
-        s.style.color="#000";
-        s.addEventListener("dragover", dragOver);
-        s.addEventListener("drop", dropNumber);
-        s.addEventListener("dragleave", dragLeave);
-    }
-}
-
-function dragStart(e){
-    e.dataTransfer.setData("text", e.target.id);
-}
-
-function dragOver(e){
-    e.preventDefault();
-    e.target.classList.add("over");
-}
-
-function dragLeave(e){
-    e.target.classList.remove("over");
-}
-
-function dropNumber(e){
-    e.preventDefault();
-    e.target.classList.remove("over");
-    let id = e.dataTransfer.getData("text");
-    let tile = document.getElementById(id);
-    e.target.textContent = tile.textContent;
-}
+slots.forEach(slot => {
+    slot.addEventListener('dragover', e => {
+        e.preventDefault();
+        slot.classList.add('over');
+    });
+    slot.addEventListener('dragleave', e => {
+        slot.classList.remove('over');
+    });
+    slot.addEventListener('drop', e => {
+        e.preventDefault();
+        slot.classList.remove('over');
+        if(slot.textContent !== "") return; 
+        let id = e.dataTransfer.getData('text');
+        let candy = document.getElementById(id);
+        slot.textContent = candy.textContent;
+        candy.classList.add('disabled-candy');
+        candy.draggable = false;
+    });
+});
 
 function checkAnswer(){
-    let user=[];
-    for(let i=1;i<=5;i++){
-        let val=document.getElementById("slot"+i).textContent;
-        if(val==="") return alert("Place all numbers!");
-        user.push(parseInt(val));
-    }
-    let result=document.getElementById("result");
-    if(JSON.stringify(user)===JSON.stringify(correctOrder)){
-        result.style.color="green";
-        result.innerHTML="✔ Correct! Well done 🎉";
-    }else{
-        result.style.color="red";
-        result.innerHTML="✘ Wrong! Try again 😢";
-    }
-    result.style.opacity=1;
-    setTimeout(loadPuzzle,2000);
-}
+    let user = [];
+    slots.forEach(s => user.push(parseInt(s.textContent)));
+    if(user.includes(NaN)) return alert("Place all candies!");
 
-loadPuzzle();
+    const result = document.getElementById("result");
+    if(JSON.stringify(user) === JSON.stringify(puzzle.answer)){
+        result.style.color = "green";
+        result.innerText = "✔ Correct! Well done 🎉";
+    } else {
+        result.style.color = "red";
+        result.innerText = "✘ Wrong! Try again 😢";
+    }
+    result.style.opacity = 1;
+}
 </script>
 
 </body>
