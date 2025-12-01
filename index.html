@@ -13,20 +13,16 @@ body {
     align-items: flex-start;
     padding: 20px;
     min-height: 100vh;
-    animation: bgMove 10s infinite alternate;
+    overflow-x: hidden;
+    animation: bgMove 20s infinite alternate;
 }
-
-/* Animate background gradient */
 @keyframes bgMove {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
     100% { background-position: 0% 50%; }
 }
 
-.main-content {
-    width: 70%;
-    text-align: center;
-}
+.main-content { width: 70%; text-align: center; }
 
 /* HEADER */
 .header {
@@ -38,75 +34,24 @@ body {
     margin-bottom: 20px;
     animation: headerPop 1s ease-in-out;
 }
+@keyframes headerPop { 0% { transform: scale(0.7); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.header img { width: 100px; height: auto; margin-bottom: 10px; border-radius: 10px; }
+.header h1 { margin: 0; font-size: 50px; font-weight: 700; color: #fff; }
 
-@keyframes headerPop {
-    0% { transform: scale(0.7); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.header img {
-    width: 100px;
-    height: auto;
-    margin-bottom: 10px;
-    border-radius: 10px;
-}
-
-.header h1 {
-    margin: 0;
-    font-size: 50px;
-    font-weight: 700;
-    color: #fff;
-}
-
-.sub-title {
-    margin-top: 10px;
-    font-size: 26px;
-    color: #fff;
-    font-weight: 700;
-    text-shadow: 1px 1px 2px #000;
-}
-
-.instruction {
-    font-size: 28px;
-    font-weight: 800;
-    color: #fff;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 3px #000;
-}
+.sub-title { margin-top: 10px; font-size: 26px; color: #fff; font-weight: 700; text-shadow: 1px 1px 2px #000; }
+.instruction { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 20px; text-shadow: 2px 2px 3px #000; }
 
 /* NUMBER TILES */
-.number-tiles {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 25px;
-    flex-wrap: wrap;
-}
-
+.number-tiles { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
 .tile {
-    width: 70px;
-    height: 70px;
-    background: #ffffffcc;
-    border-radius: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: grab;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
+    width: 70px; height: 70px; background: #ffffffcc; border-radius: 15px;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 28px; font-weight: bold; cursor: grab;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3); transition: transform 0.2s;
     animation: tilePop 0.5s ease forwards;
 }
-
-.tile:active {
-    transform: scale(1.3);
-}
-
-@keyframes tilePop {
-    0% { transform: scale(0); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
+.tile:active { transform: scale(1.3); }
+@keyframes tilePop { 0% { transform: scale(0); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
 /* CANDY STAND */
 .candy-stand {
@@ -119,119 +64,54 @@ body {
 }
 
 /* SLOTS */
-.slots {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 25px;
-}
-
+.slots { display: flex; justify-content: center; gap: 20px; margin-bottom: 25px; }
 .slot {
-    width: 100px;
-    height: 100px;
-    border: 3px dashed #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
-    color: #fff;
-    font-weight: bold;
+    width: 100px; height: 100px; border: 3px dashed #fff; border-radius: 50%;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 32px; color: #fff; font-weight: bold;
     transition: background 0.3s, transform 0.3s;
 }
-
-.slot.over {
-    background: #ffffff88;
-    transform: scale(1.1);
-}
+.slot.over { background: #ffffff88; transform: scale(1.1); }
 
 /* CANDIES */
 .candies {
-    display: flex;
-    justify-content: center;
-    gap: 40px;
-    align-items: flex-end;
-    margin-top: 20px;
+    display: flex; justify-content: center; gap: 40px; align-items: flex-end; margin-top: 20px;
 }
+.candy { display: flex; flex-direction: column; align-items: center; animation: candyPop 0.5s ease; }
+@keyframes candyPop { 0% { transform: scale(0.5); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-.candy {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    animation: candyPop 0.5s ease;
-}
-
-@keyframes candyPop {
-    0% { transform: scale(0.5); opacity: 0; }
-    100% { transform: scale(1); opacity: 1; }
-}
-
-.stick {
-    width: 28px;
-    border-radius: 20px;
-    margin-top: 10px;
-    border: 5px solid #795548;
-}
-
+.stick { width: 28px; border-radius: 20px; margin-top: 10px; border: 5px solid #795548; }
 .c1 { background:#ffca28; height:150px; }
 .c2 { background:#00bcd4; height:200px; }
 .c3 { background:#8bc34a; height:230px; }
 .c4 { background:#4caf50; height:260px; }
-.c5 { background:#f44336; height:300px; }
 
+/* Only 4 circles (no middle) */
 .circle {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    background: white;
-    border: 5px solid #555;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 32px;
-    font-weight: bold;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    width: 100px; height: 100px; border-radius: 50%; background: white; border: 5px solid #555;
+    display: flex; justify-content: center; align-items: center;
+    font-size: 32px; font-weight: bold; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     transition: background 0.3s, transform 0.3s;
 }
-
-.circle.over {
-    background: #d4ffd7;
-    transform: scale(1.2);
-}
-
-.disabled-candy {
-    opacity: 0.5;
-    pointer-events: none;
-}
+.circle.over { background: #d4ffd7; transform: scale(1.2); }
+.disabled-candy { opacity: 0.5; pointer-events: none; }
 
 /* BUTTONS */
 .btn {
-    margin: 15px 10px 0 10px;
-    padding: 12px 25px;
-    font-size: 20px;
-    background: #f59e0b;
-    color: white;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    font-weight: bold;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    transition: transform 0.2s;
+    margin: 15px 10px 0 10px; padding: 12px 25px; font-size: 20px;
+    background: #f59e0b; color: white; border: none; border-radius: 15px;
+    cursor: pointer; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); transition: transform 0.2s;
 }
+.btn:hover { transform: scale(1.1); }
 
-.btn:hover {
-    transform: scale(1.1);
-}
+#result { margin-top: 15px; font-size: 28px; font-weight: bold; opacity: 0; transition: 0.8s; color: #fff; text-shadow: 1px 1px #000; }
 
-#result {
-    margin-top: 15px;
-    font-size: 28px;
-    font-weight: bold;
-    opacity: 0;
-    transition: 0.8s;
-    color: #fff;
-    text-shadow: 1px 1px #000;
+/* FLOATING MATH SYMBOLS */
+.symbols {
+    position: fixed; bottom: 0; width: 100%; display: flex; justify-content: space-around;
+    pointer-events: none; font-size: 30px; animation: float 4s ease-in-out infinite; color: rgba(255,255,255,0.6);
 }
+@keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
 </style>
 </head>
 <body>
@@ -245,17 +125,14 @@ body {
     <div class="sub-title">🍬 Candy Puzzle Challenge! 🍭</div>
     <div class="instruction" id="title"></div>
 
-    <!-- Number Tiles -->
     <div class="number-tiles" id="numbers"></div>
 
-    <!-- Candy Stand -->
     <div class="candy-stand">
         <div class="slots">
             <div class="slot" id="slot1"></div>
             <div class="slot" id="slot2"></div>
             <div class="slot" id="slot3"></div>
             <div class="slot" id="slot4"></div>
-            <div class="slot" id="slot5"></div>
         </div>
 
         <div class="candies">
@@ -263,7 +140,6 @@ body {
             <div class="candy"><div class="circle" id="c2">?</div><div class="stick c2"></div></div>
             <div class="candy"><div class="circle" id="c3">?</div><div class="stick c3"></div></div>
             <div class="candy"><div class="circle" id="c4">?</div><div class="stick c4"></div></div>
-            <div class="candy"><div class="circle" id="c5">?</div><div class="stick c5"></div></div>
         </div>
 
         <div>
@@ -275,34 +151,43 @@ body {
     </div>
 </div>
 
+<div class="symbols">+ &minus; × ÷ = √ π ∑</div>
+
 <script>
+// Puzzle data (new fun challenges)
 const puzzles = [
-    {numbers: [2,5,8,3,7], answer: [8,3,7,2,5], question: "Drag numbers to candies from largest to smallest."},
-    {numbers: [10,6,14,9,2], answer: [14,10,9,6,2], question: "Arrange numbers on candies largest to smallest."},
-    {numbers: [1,4,3,5,2], answer: [5,4,3,2,1], question: "Place numbers on candies from biggest to smallest."}
+    {numbers:[2,5,8,3], answer:[3,8,5,2], question:"Arrange the candies so the sum of first two numbers is 11."},
+    {numbers:[7,4,9,6], answer:[9,7,6,4], question:"Place numbers so that largest is first and smallest last."},
+    {numbers:[1,3,5,2], answer:[5,1,2,3], question:"Arrange candies to make an alternating high-low pattern."},
+    {numbers:[10,2,8,5], answer:[2,10,5,8], question:"Arrange numbers so second is biggest, last is medium."},
+    {numbers:[6,9,3,7], answer:[7,6,3,9], question:"Arrange candies to satisfy the given pattern."}
 ];
-let currentIndex = 0;
+
+let currentIndex=0;
+
+// Sounds (optional)
+const dragSound = new Audio('sounds/drag.mp3');
+const correctSound = new Audio('sounds/correct.mp3');
+const wrongSound = new Audio('sounds/wrong.mp3');
 
 function loadPuzzle(){
     const puzzle = puzzles[currentIndex];
     document.getElementById("title").innerText = puzzle.question;
 
-    // Number tiles
     const numbersDiv = document.getElementById("numbers");
-    numbersDiv.innerHTML = "";
+    numbersDiv.innerHTML="";
     puzzle.numbers.forEach(n=>{
         const tile = document.createElement("div");
-        tile.className="tile";
-        tile.draggable=true;
-        tile.id="num"+n;
-        tile.innerText=n;
-        tile.addEventListener("dragstart", e => e.dataTransfer.setData("text", tile.id));
+        tile.className="tile"; tile.draggable=true; tile.id="num"+n; tile.innerText=n;
+        tile.addEventListener("dragstart", e=>{
+            dragSound.play();
+            e.dataTransfer.setData("text", tile.id);
+        });
         numbersDiv.appendChild(tile);
     });
 
-    // Candies reset
-    document.querySelectorAll(".circle").forEach(c=>{
-        c.textContent="?";
+    document.querySelectorAll(".circle").forEach(c=>{ 
+        c.textContent="?"; 
         c.classList.remove("disabled-candy");
     });
 
@@ -321,33 +206,24 @@ document.querySelectorAll(".circle").forEach(c=>{
         c.textContent = tile.textContent;
         tile.classList.add("disabled-candy");
         tile.draggable=false;
+        dragSound.play();
     });
 });
 
-// Check answer
 function checkAnswer(){
     const puzzle = puzzles[currentIndex];
     const user = [...document.querySelectorAll(".circle")].map(c=>parseInt(c.textContent));
     if(user.includes(NaN)) return alert("Drag all numbers!");
 
+    const correct = user.every((v,i)=>v===puzzle.answer[i]);
     const result = document.getElementById("result");
-    if(JSON.stringify(user)===JSON.stringify(puzzle.answer)){
-        result.style.color="green";
-        result.innerText="✔ Correct! Well done 🎉";
-    } else {
-        result.style.color="red";
-        result.innerText="✘ Wrong! Try again.";
-    }
+    if(correct){ result.style.color="green"; result.innerText="✔ Correct! 🎉"; correctSound.play(); }
+    else { result.style.color="red"; result.innerText="✘ Wrong!"; wrongSound.play(); }
     result.style.opacity=1;
 
-    // Next puzzle
-    setTimeout(()=>{
-        currentIndex = (currentIndex+1)%puzzles.length;
-        loadPuzzle();
-    },2000);
+    setTimeout(()=>{ currentIndex=(currentIndex+1)%puzzles.length; loadPuzzle(); },2000);
 }
 
-// Show Answer
 function showAnswer(){
     const puzzle = puzzles[currentIndex];
     document.querySelectorAll(".circle").forEach((c,i)=>{
@@ -356,14 +232,8 @@ function showAnswer(){
     });
 }
 
-// Retry
-function retryPuzzle(){
-    loadPuzzle();
-}
-
-// Initial
+function retryPuzzle(){ loadPuzzle(); }
 loadPuzzle();
 </script>
-
 </body>
 </html>
