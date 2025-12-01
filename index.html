@@ -1,900 +1,323 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMART MATH LAB - Number Puzzle</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<title>SMART MATH LAB – Candy Order Puzzle</title>
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 10px;
-        }
+<style>
+    body {
+        margin: 0;
+        font-family: Poppins, sans-serif;
+        background: linear-gradient(135deg, #be5c7d, #e079b5);
+        overflow-x: hidden;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding: 20px;
+        height: 100vh;
+    }
 
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 30px;
-            max-width: 900px;
-            width: 100%;
-        }
+    /* LEFT IMAGE PANEL */
+    .image-panel {
+        width: 40%;
+        height: 100%;
+        background-image: url("images/candy.png"); /* your model image */
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+        border-radius: 15px;
+    }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .main-content {
+        width: 55%;
+        text-align: center;
+    }
 
-        .logo {
-            height: 50px;
-            margin-bottom: 10px;
-        }
+    .header {
+        text-align: center;
+        padding: 15px;
+        background: rgb(202, 105, 105);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        border-radius: 15px;
+        margin-bottom: 20px;
+    }
 
-        h1 {
-            color: #667eea;
-            font-size: 32px;
-            margin-bottom: 10px;
-        }
+    .header h1 {
+        margin: 0;
+        font-size: 60px;
+        font-weight: 700;
+        color: #e21818;
+    }
 
-        .stats-bar {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
+    .header img {
+        height: 55px;
+        margin-top: 10px;
+    }
 
-        .stat-box {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            text-align: center;
-            min-width: 150px;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
+    .sub-title {
+        margin-top: 10px;
+        font-size: 24px;
+        color: #4a148c;
+        font-weight: 600;
+        text-shadow: 1px 1px 2px #fff;
+    }
 
-        .stat-label {
-            font-size: 12px;
-            opacity: 0.9;
-            margin-bottom: 5px;
-        }
+    .instruction {
+        font-size: 26px;
+        font-weight: bold;
+        color: #0c457d;
+        margin-bottom: 15px;
+    }
 
-        .stat-value {
-            font-size: 24px;
-            font-weight: bold;
-        }
+    .candy-stand {
+        margin: auto;
+        background: rgba(255,255,255,0.9);
+        padding: 25px;
+        border-radius: 20px;
+        box-shadow: 0 6px 25px rgba(0,0,0,0.25);
+        backdrop-filter: blur(3px);
+    }
 
-        .difficulty-selector {
-            text-align: center;
-            margin-bottom: 20px;
-        }
+    .candies {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin-top: 30px;
+        align-items: flex-end;
+    }
 
-        .difficulty-selector label {
-            color: #333;
-            font-weight: 600;
-            margin-right: 15px;
-        }
+    /* Candy sticks and upright candies */
+    .c1 { background:#ffca28; height:150px; }
+    .c2 { background:#00bcd4; height:200px; }
+    .c3 { background:#8bc34a; height:230px; }
+    .c4 { background:#4caf50; height:260px; }
+    .c5 { background:#f44336; height:300px; }
 
-        .difficulty-buttons {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    .candy {
+        display: flex;
+        flex-direction: column; /* upright candy: stick on bottom */
+        align-items: center;
+        animation: pop 0.7s ease;
+    }
 
-        .difficulty-btn {
-            padding: 8px 15px;
-            border: 2px solid #667eea;
-            background: white;
-            color: #667eea;
-            border-radius: 5px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+    @keyframes pop {
+        0% { transform: scale(0.5); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
 
-        .difficulty-btn.active {
-            background: #667eea;
-            color: white;
-        }
+    .stick {
+        width: 28px;
+        border-radius: 20px;
+        margin-top: 10px;
+        border: 5px solid #795548;
+    }
 
-        .difficulty-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-        }
+    .circle {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        background: white;
+        border: 5px solid #555;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        cursor: grab;
+    }
 
-        .instruction {
-            background: #f0f4ff;
-            border-left: 4px solid #667eea;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            font-size: 16px;
-            color: #333;
-            font-weight: 500;
-        }
+    .circle.over {
+        background: #d4ffd7;
+        transform: scale(1.1);
+        transition: 0.2s;
+    }
 
-        .game-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-        }
+    .numbers {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
 
-        .candy-container {
-            position: relative;
-            display: inline-block;
-            cursor: pointer;
-        }
+    .tile {
+        width: 85px;
+        height: 85px;
+        background: #ffffffcc;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        border-radius: 18px;
+        font-size: 32px;
+        font-weight: bold;
+        cursor: grab;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(3px);
+        transition: transform 0.2s;
+    }
 
-        .candy-image {
-            width: 400px;
-            height: auto;
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            display: block;
-        }
+    .tile:hover {
+        transform: scale(1.2);
+    }
 
-        .drop-zones-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
+    .btn {
+        margin-top: 25px;
+        padding: 12px 25px;
+        font-size: 20px;
+        background: #ff3d3d;
+        color: white;
+        border: none;
+        border-radius: 15px;
+        cursor: pointer;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
 
-        .candy-zone {
-            position: absolute;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+    #result {
+        margin-top: 15px;
+        font-size: 26px;
+        font-weight: bold;
+        opacity: 0;
+        transition: 0.8s;
+    }
 
-        .candy-zone:hover {
-            filter: brightness(1.2);
-        }
-
-        .candy-zone.selected {
-            filter: brightness(0.8) drop-shadow(0 0 8px #ff6b6b);
-        }
-
-        .drop-zone {
-            position: absolute;
-            width: 50px;
-            height: 50px;
-            border: 2px solid #ff6b6b;
-            border-radius: 50%;
-            background: rgba(255, 107, 107, 0.15);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 18px;
-            color: #ff6b6b;
-            transition: all 0.3s ease;
-            user-select: none;
-        }
-
-        .drop-zone:hover {
-            background: rgba(255, 107, 107, 0.25);
-            border-color: #ff4757;
-            transform: scale(1.1);
-            box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-        }
-
-        .drop-zone.filled {
-            background: #ff6b6b;
-            color: white;
-            border-color: #ff4757;
-            font-size: 20px;
-        }
-
-        .drop-zone.highlight {
-            background: rgba(255, 107, 107, 0.3);
-            border-color: #ff4757;
-            transform: scale(1.15);
-        }
-
-        .tiles-container {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        .tile {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 20px;
-            font-weight: bold;
-            cursor: move;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            user-select: none;
-        }
-
-        .tile:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .tile.dragging {
-            opacity: 0.5;
-            transform: scale(0.95);
-        }
-
-        .tile.used {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin-top: 20px;
-        }
-
-        button {
-            padding: 12px 30px;
-            font-size: 16px;
-            font-weight: 600;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .check-btn {
-            background: #51cf66;
-            color: white;
-            box-shadow: 0 5px 15px rgba(81, 207, 102, 0.4);
-        }
-
-        .check-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(81, 207, 102, 0.6);
-        }
-
-        .check-btn:active {
-            transform: translateY(0);
-        }
-
-        .reset-btn {
-            background: #ffa502;
-            color: white;
-            box-shadow: 0 5px 15px rgba(255, 165, 2, 0.4);
-        }
-
-        .reset-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(255, 165, 2, 0.6);
-        }
-
-        .game-message {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: white;
-            padding: 20px 30px;
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            font-size: 18px;
-            font-weight: 600;
-            z-index: 1000;
-            animation: slideIn 0.3s ease;
-        }
-
-        .game-message.success {
-            border-left: 5px solid #51cf66;
-            color: #51cf66;
-        }
-
-        .game-message.error {
-            border-left: 5px solid #ff6b6b;
-            color: #ff6b6b;
-        }
-
-        .game-message.info {
-            border-left: 5px solid #667eea;
-            color: #667eea;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        .result-message {
-            text-align: center;
-            margin-top: 20px;
-            padding: 20px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            display: none;
-        }
-
-        .result-message.show {
-            display: block;
-            animation: slideIn 0.5s ease;
-        }
-
-        .result-message.success {
-            background: #d4edda;
-            color: #155724;
-            border: 2px solid #51cf66;
-        }
-
-        .result-message.error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 2px solid #ff6b6b;
-        }
-
-        .sound-toggle {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-            transition: all 0.3s ease;
-            z-index: 999;
-        }
-
-        .sound-toggle:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
-        }
-
-        .sound-toggle.muted {
-            opacity: 0.6;
-        }
-
-        @media (max-width: 768px) {
-            .container {
-                padding: 15px;
-            }
-
-            .stats-bar {
-                gap: 10px;
-            }
-
-            .stat-box {
-                padding: 10px 15px;
-                min-width: 120px;
-            }
-
-            .stat-value {
-                font-size: 20px;
-            }
-
-            .candy-image {
-                width: 280px;
-            }
-
-            .drop-zone {
-                width: 45px;
-                height: 45px;
-                font-size: 16px;
-                border-width: 2px;
-            }
-
-            .tile {
-                width: 45px;
-                height: 45px;
-                font-size: 18px;
-            }
-
-            h1 {
-                font-size: 24px;
-            }
-        }
-    </style>
+</style>
 </head>
+
 <body>
-    <button class="sound-toggle" id="soundToggle" title="Toggle Sound">🔊</button>
 
-    <div class="container">
+    <div class="image-panel"></div>
+
+    <div class="main-content">
         <div class="header">
-            <img src="images/logo.png" alt="Logo" class="logo">
             <h1>SMART MATH LAB</h1>
-            <p style="color: #666; margin-top: 5px;">Arrange numbers in the correct order!</p>
+            <img src="images/logo.png" alt="Your Logo">
         </div>
 
-        <div class="stats-bar">
-            <div class="stat-box">
-                <div class="stat-label">SCORE</div>
-                <div class="stat-value" id="scoreDisplay">0</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">TIME</div>
-                <div class="stat-value" id="timerDisplay">60</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">DIFFICULTY</div>
-                <div class="stat-value" id="difficultyDisplay">EASY</div>
+        <div class="sub-title">🍬 Play With Small to Big Candies! 🍭</div>
+        <div class="instruction" id="title"></div>
+
+        <div class="candy-stand">
+            <div class="candies">
+                <div class="candy">
+                    <div class="circle" id="slot1"></div>
+                    <div class="stick c1"></div>
+                </div>
+                <div class="candy">
+                    <div class="circle" id="slot2"></div>
+                    <div class="stick c2"></div>
+                </div>
+                <div class="candy">
+                    <div class="circle" id="slot3"></div>
+                    <div class="stick c3"></div>
+                </div>
+                <div class="candy">
+                    <div class="circle" id="slot4"></div>
+                    <div class="stick c4"></div>
+                </div>
+                <div class="candy">
+                    <div class="circle" id="slot5"></div>
+                    <div class="stick c5"></div>
+                </div>
             </div>
         </div>
 
-        <div class="difficulty-selector" id="difficultySelector">
-            <label>Select Difficulty:</label>
-            <div class="difficulty-buttons">
-                <button class="difficulty-btn active" data-difficulty="easy">EASY</button>
-                <button class="difficulty-btn" data-difficulty="medium">MEDIUM</button>
-                <button class="difficulty-btn" data-difficulty="hard">HARD</button>
-            </div>
-        </div>
-
-        <div class="instruction" id="instruction">
-            Drag the numbers onto the circles to arrange them in ASCENDING order!
-        </div>
-
-        <div class="game-area">
-            <div class="candy-container">
-                <img src="images/candy.png" alt="Candy" class="candy-image">
-                <div class="drop-zones-overlay" id="dropZonesOverlay"></div>
-            </div>
-
-            <div class="tiles-container" id="tilesContainer"></div>
-
-            <div class="controls">
-                <button class="check-btn" id="checkBtn">CHECK ANSWER</button>
-                <button class="reset-btn" id="resetBtn">RESET</button>
-            </div>
-
-            <div class="result-message" id="resultMessage"></div>
-        </div>
+        <div class="numbers" id="numbers"></div>
+        <button class="btn" onclick="checkAnswer()">CHECK</button>
+        <div id="result"></div>
     </div>
 
-    <script>
-        // ============ GAME STATE ============
-        let gameState = {
-            score: 0,
-            timeLeft: 60,
-            difficulty: 'easy',
-            soundEnabled: true,
-            currentPuzzle: null,
-            correctOrder: [],
-            droppedNumbers: {},
-            timerInterval: null,
-            gameActive: true
-        };
+<script>
+let puzzles = [
+    [2, 5, 8, 3, 7],
+    [12, 4, 15, 9, 1],
+    [6, 18, 2, 13, 11]
+];
+
+let mode = ["ASCENDING", "DESCENDING"];
+let currentPuzzle, correctOrder;
+
+function loadPuzzle() {
+    document.getElementById("result").style.opacity = 0;
+    currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+    let gameMode = mode[Math.floor(Math.random() * mode.length)];
+    document.getElementById("title").innerHTML =
+        `Arrange in <span style="color:red;">${gameMode}</span> order`;
+    correctOrder = [...currentPuzzle];
+    correctOrder.sort((a,b)=> gameMode==="ASCENDING"? a-b : b-a);
+    loadTiles();
+    clearSlots();
+}
+
+function loadTiles() {
+    let area = document.getElementById("numbers");
+    area.innerHTML = "";
+    currentPuzzle.forEach(n => {
+        let div = document.createElement("div");
+        div.className = "tile";
+        div.draggable = true;
+        div.id = "t"+n;
+        div.textContent = n;
+        div.addEventListener("dragstart", dragStart);
+        area.appendChild(div);
+    });
+}
+
+function clearSlots() {
+    for(let i=1;i<=5;i++){
+        let s=document.getElementById("slot"+i);
+        s.textContent="";
+        s.style.color="#000";
+        s.addEventListener("dragover", dragOver);
+        s.addEventListener("drop", dropNumber);
+        s.addEventListener("dragleave", dragLeave);
+    }
+}
+
+function dragStart(e){
+    e.dataTransfer.setData("text", e.target.id);
+}
+
+function dragOver(e){
+    e.preventDefault();
+    e.target.classList.add("over");
+}
+
+function dragLeave(e){
+    e.target.classList.remove("over");
+}
+
+function dropNumber(e){
+    e.preventDefault();
+    e.target.classList.remove("over");
+    let id = e.dataTransfer.getData("text");
+    let tile = document.getElementById(id);
+    e.target.textContent = tile.textContent;
+}
+
+function checkAnswer(){
+    let user=[];
+    for(let i=1;i<=5;i++){
+        let val=document.getElementById("slot"+i).textContent;
+        if(val==="") return alert("Place all numbers!");
+        user.push(parseInt(val));
+    }
+    let result=document.getElementById("result");
+    if(JSON.stringify(user)===JSON.stringify(correctOrder)){
+        result.style.color="green";
+        result.innerHTML="✔ Correct! Well done 🎉";
+    }else{
+        result.style.color="red";
+        result.innerHTML="✘ Wrong! Try again 😢";
+    }
+    result.style.opacity=1;
+    setTimeout(loadPuzzle,2000);
+}
+
+loadPuzzle();
+</script>
 
-        // ============ PUZZLE DATA ============
-        const puzzles = [
-            [2, 5, 8, 3, 7],
-            [12, 4, 15, 9, 1],
-            [6, 18, 2, 13, 11],
-            [25, 10, 30, 5, 20],
-            [7, 14, 3, 21, 10],
-            [9, 27, 3, 18, 12],
-            [16, 4, 8, 2, 12],
-            [11, 22, 33, 44, 55],
-            [19, 38, 57, 10, 29],
-            [6, 3, 9, 12, 15],
-            [50, 25, 75, 100, 15],
-            [13, 26, 39, 52, 65],
-            [8, 16, 24, 32, 40],
-            [17, 34, 51, 68, 85],
-            [21, 42, 63, 84, 105]
-        ];
-
-        const modes = ['ASCENDING', 'DESCENDING'];
-        const dropZonePositions = [
-            { top: '-35px', left: '8%' },
-            { top: '-38px', left: '50%', transform: 'translateX(-50%)' },
-            { top: '-35px', right: '8%' },
-            { top: '-15px', left: '22%' },
-            { top: '-15px', right: '22%' }
-        ];
-
-        // ============ SOUND EFFECTS ============
-        function playSound(type) {
-            if (!gameState.soundEnabled) return;
-
-            try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-
-                switch(type) {
-                    case 'drop':
-                        oscillator.frequency.value = 800;
-                        gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                        oscillator.start(audioContext.currentTime);
-                        oscillator.stop(audioContext.currentTime + 0.1);
-                        break;
-                    case 'success':
-                        oscillator.frequency.value = 1000;
-                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
-                        oscillator.start(audioContext.currentTime);
-                        oscillator.stop(audioContext.currentTime + 0.3);
-                        break;
-                    case 'error':
-                        oscillator.frequency.value = 300;
-                        gainNode.gain.setValueAtTime(0.2, audioContext.currentTime);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.2);
-                        oscillator.start(audioContext.currentTime);
-                        oscillator.stop(audioContext.currentTime + 0.2);
-                        break;
-                    case 'tick':
-                        oscillator.frequency.value = 600;
-                        gainNode.gain.setValueAtTime(0.05, audioContext.currentTime);
-                        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
-                        oscillator.start(audioContext.currentTime);
-                        oscillator.stop(audioContext.currentTime + 0.05);
-                        break;
-                }
-            } catch (e) {
-                console.log('Audio context not available');
-            }
-        }
-
-        // ============ TIMER FUNCTIONS ============
-        function startTimer() {
-            if (gameState.timerInterval) clearInterval(gameState.timerInterval);
-            gameState.timeLeft = 60;
-            gameState.gameActive = true;
-
-            gameState.timerInterval = setInterval(() => {
-                gameState.timeLeft--;
-                document.getElementById('timerDisplay').textContent = gameState.timeLeft;
-
-                if (gameState.timeLeft <= 10) {
-                    playSound('tick');
-                }
-
-                if (gameState.timeLeft <= 0) {
-                    clearInterval(gameState.timerInterval);
-                    gameState.gameActive = false;
-                    showMessage('TIME UP! Game Over!', 'error');
-                    playSound('error');
-                    setTimeout(loadPuzzle, 2000);
-                }
-            }, 1000);
-        }
-
-        // ============ DIFFICULTY FUNCTIONS ============
-        function setDifficulty(level) {
-            gameState.difficulty = level;
-            document.getElementById('difficultyDisplay').textContent = level.toUpperCase();
-            document.querySelectorAll('.difficulty-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            loadPuzzle();
-        }
-
-        // ============ PUZZLE FUNCTIONS ============
-        function loadPuzzle() {
-            if (gameState.timerInterval) clearInterval(gameState.timerInterval);
-            
-            // Select random puzzle and mode
-            const randomPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
-            const randomMode = modes[Math.floor(Math.random() * modes.length)];
-            
-            gameState.currentPuzzle = [...randomPuzzle];
-            gameState.correctOrder = randomMode === 'ASCENDING' 
-                ? [...randomPuzzle].sort((a, b) => a - b)
-                : [...randomPuzzle].sort((a, b) => b - a);
-            gameState.droppedNumbers = {};
-
-            // Update instruction
-            document.getElementById('instruction').textContent = 
-                `Arrange the numbers in ${randomMode} order! Time: 60 seconds`;
-
-            // Hide difficulty selector and result after first puzzle
-            document.getElementById('difficultySelector').style.display = 'none';
-
-            createDropZones();
-            loadTiles();
-            clearResultMessage();
-            startTimer();
-        }
-
-        function createDropZones() {
-            const overlay = document.getElementById('dropZonesOverlay');
-            overlay.innerHTML = '';
-
-            for (let i = 0; i < 5; i++) {
-                const zone = document.createElement('div');
-                zone.className = 'drop-zone';
-                zone.id = `zone-${i}`;
-                zone.draggable = false;
-                
-                const pos = dropZonePositions[i];
-                Object.assign(zone.style, {
-                    top: pos.top,
-                    bottom: pos.bottom,
-                    left: pos.left,
-                    right: pos.right,
-                    transform: pos.transform || 'none'
-                });
-
-                zone.addEventListener('click', placeOnZone);
-                zone.addEventListener('dragover', dragOverZone);
-                zone.addEventListener('dragleave', dragLeaveZone);
-                zone.addEventListener('drop', dropOnZone);
-
-                overlay.appendChild(zone);
-            }
-        }
-
-        function loadTiles() {
-            const container = document.getElementById('tilesContainer');
-            container.innerHTML = '';
-
-            gameState.currentPuzzle.forEach((num, index) => {
-                const tile = document.createElement('button');
-                tile.className = 'tile';
-                tile.textContent = num;
-                tile.id = `tile-${index}`;
-                tile.draggable = true;
-
-                tile.addEventListener('click', selectTile);
-                tile.addEventListener('dragstart', dragStart);
-                tile.addEventListener('dragend', dragEnd);
-
-                container.appendChild(tile);
-            });
-        }
-
-        // ============ CLICK-BASED PLACEMENT FUNCTIONS ============
-        let selectedTile = null;
-
-        function selectTile(e) {
-            if (!gameState.gameActive) return;
-
-            if (e.target.classList.contains('used')) return;
-            
-            if (selectedTile) {
-                selectedTile.classList.remove('selected');
-            }
-
-            e.target.classList.add('selected');
-            selectedTile = e.target;
-            showMessage('Now click on a circle to place this number!', 'info');
-        }
-
-        function placeOnZone(e) {
-            if (!gameState.gameActive || !selectedTile) return;
-
-            e.preventDefault();
-            e.stopPropagation();
-
-            const zone = e.currentTarget;
-            const zoneId = zone.id;
-            const zoneIndex = parseInt(zoneId.split('-')[1]);
-
-            const number = parseInt(selectedTile.textContent);
-
-            // Remove previous number from this zone if exists
-            if (gameState.droppedNumbers[zoneIndex]) {
-                const oldTileId = gameState.droppedNumbers[zoneIndex].tileId;
-                const oldTile = document.getElementById(oldTileId);
-                if (oldTile) oldTile.classList.remove('used');
-            }
-
-            gameState.droppedNumbers[zoneIndex] = {
-                number: number,
-                tileId: selectedTile.id
-            };
-
-            selectedTile.classList.add('used');
-            selectedTile.classList.remove('selected');
-            zone.textContent = number;
-            zone.classList.add('filled');
-
-            playSound('drop');
-            selectedTile = null;
-            showMessage(`Number ${number} placed on circle ${zoneIndex + 1}!`, 'success');
-        }
-
-        function dragStart(e) {
-            e.dataTransfer.effectAllowed = 'move';
-            e.dataTransfer.setData('text/html', e.target.id);
-            e.target.classList.add('dragging');
-            playSound('drop');
-        }
-
-        function dragEnd(e) {
-            e.target.classList.remove('dragging');
-        }
-
-        function dragOverZone(e) {
-            e.preventDefault();
-            e.dataTransfer.dropEffect = 'move';
-            e.currentTarget.classList.add('highlight');
-        }
-
-        function dragLeaveZone(e) {
-            e.currentTarget.classList.remove('highlight');
-        }
-
-        function dropOnZone(e) {
-            e.preventDefault();
-            e.currentTarget.classList.remove('highlight');
-
-            if (!gameState.gameActive) return;
-
-            const tileId = e.dataTransfer.getData('text/html');
-            const tile = document.getElementById(tileId);
-            const zoneId = e.currentTarget.id;
-            const zoneIndex = parseInt(zoneId.split('-')[1]);
-
-            const number = parseInt(tile.textContent);
-
-            // Remove previous number from this zone if exists
-            if (gameState.droppedNumbers[zoneIndex]) {
-                const oldTile = document.getElementById(gameState.droppedNumbers[zoneIndex].tileId);
-                if (oldTile) oldTile.classList.remove('used');
-            }
-
-            gameState.droppedNumbers[zoneIndex] = {
-                number: number,
-                tileId: tileId
-            };
-
-            tile.classList.add('used');
-            e.currentTarget.textContent = number;
-            e.currentTarget.classList.add('filled');
-
-            playSound('drop');
-        }
-
-        // ============ CHECK ANSWER FUNCTION ============
-        function checkAnswer() {
-            if (!gameState.gameActive) return;
-
-            const droppedArray = [];
-            for (let i = 0; i < 5; i++) {
-                if (gameState.droppedNumbers[i]) {
-                    droppedArray.push(gameState.droppedNumbers[i].number);
-                } else {
-                    droppedArray.push(null);
-                }
-            }
-
-            // Check if all zones are filled
-            if (droppedArray.includes(null)) {
-                showMessage('Fill all circles first!', 'error');
-                playSound('error');
-                return;
-            }
-
-            // Check if arrangement is correct
-            const isCorrect = JSON.stringify(droppedArray) === JSON.stringify(gameState.correctOrder);
-
-            if (isCorrect) {
-                gameState.gameActive = false;
-                clearInterval(gameState.timerInterval);
-                
-                // Award points based on difficulty and time
-                let points = 10;
-                if (gameState.difficulty === 'medium') points = 20;
-                if (gameState.difficulty === 'hard') points = 30;
-                
-                // Bonus for remaining time
-                points += Math.floor(gameState.timeLeft / 6);
-                
-                gameState.score += points;
-                document.getElementById('scoreDisplay').textContent = gameState.score;
-
-                showResultMessage(`✓ CORRECT! +${points} points!`, 'success');
-                showMessage(`Great job! +${points} points!`, 'success');
-                playSound('success');
-
-                setTimeout(loadPuzzle, 3000);
-            } else {
-                showMessage('❌ Not correct! Try again!', 'error');
-                playSound('error');
-            }
-        }
-
-        // ============ UTILITY FUNCTIONS ============
-        function showMessage(msg, type = 'info') {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `game-message ${type}`;
-            messageDiv.textContent = msg;
-            document.body.appendChild(messageDiv);
-
-            setTimeout(() => {
-                messageDiv.remove();
-            }, 3000);
-        }
-
-        function showResultMessage(msg, type) {
-            const resultDiv = document.getElementById('resultMessage');
-            resultDiv.textContent = msg;
-            resultDiv.className = `result-message ${type} show`;
-        }
-
-        function clearResultMessage() {
-            const resultDiv = document.getElementById('resultMessage');
-            resultDiv.classList.remove('show');
-            resultDiv.textContent = '';
-        }
-
-        function resetPuzzle() {
-            gameState.droppedNumbers = {};
-            selectedTile = null;
-            
-            // Clear zones
-            document.querySelectorAll('.drop-zone').forEach(zone => {
-                zone.textContent = '';
-                zone.classList.remove('filled');
-            });
-
-            // Clear used tiles
-            document.querySelectorAll('.tile').forEach(tile => {
-                tile.classList.remove('used', 'selected');
-            });
-
-            clearResultMessage();
-            showMessage('Puzzle reset!', 'info');
-        }
-
-        // ============ EVENT LISTENERS ============
-        document.getElementById('checkBtn').addEventListener('click', checkAnswer);
-        document.getElementById('resetBtn').addEventListener('click', resetPuzzle);
-
-        document.getElementById('soundToggle').addEventListener('click', function() {
-            gameState.soundEnabled = !gameState.soundEnabled;
-            this.classList.toggle('muted');
-            this.textContent = gameState.soundEnabled ? '🔊' : '🔇';
-        });
-
-        document.querySelectorAll('.difficulty-btn').forEach(btn => {
-            btn.addEventListener('click', function() {
-                setDifficulty(this.dataset.difficulty);
-            });
-        });
-
-        // ============ GAME INITIALIZATION ============
-        window.addEventListener('load', () => {
-            showMessage('Welcome to SMART MATH LAB!', 'info');
-            setTimeout(loadPuzzle, 1000);
-        });
-    </script>
 </body>
 </html>
